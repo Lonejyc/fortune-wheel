@@ -1,0 +1,8 @@
+text{
+    font-size:11px;
+    pointer-events:none;
+}
+#chart{
+    width:500px;
+    height:500px;
+}
