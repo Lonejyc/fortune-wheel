@@ -5,43 +5,79 @@ import { scaleOrdinal } from 'd3-scale';
 import "./Wheel.css";
 
 function Wheel() {
-    const [items, setItems] = useState([
-      { label: 'Test', value: 1 }
-    ]);
+    // const [items, setItems] = useState([
+    //   { label: 'Test', value: 1 }
+    // ]);
   
-    const [newItems, setNewItems] = useState("");
+    // const [newItems, setNewItems] = useState("");
+    
+    const [data, setData] = useState([
+      { label: 'Test', value: 1 },
+      { label: 'Test', value: 2 },
+      { label: 'Test', value: 3 }
+    ]);
+    
+    const [newDatas, setNewDatas] = useState("");
   
     // comportements
+    // const handleDelete = (value) => {
+    //   // 1. copie du state
+    //   const itemsCopy = [...items];
+  
+    //   // 2. manipulation sur la copie du state
+    //   const itemsCopyUpdated = itemsCopy.filter((item) => item.value !== value);
+  
+    //   // 3. modifier le state avec le setter
+    //   setItems(itemsCopyUpdated);
+    // };
+
     const handleDelete = (value) => {
       // 1. copie du state
-      const itemsCopy = [...items];
+      const datasCopy = [...data];
   
       // 2. manipulation sur la copie du state
-      const itemsCopyUpdated = itemsCopy.filter((item) => item.value !== value);
+      const datasCopyUpdated = datasCopy.filter((data) => data.value !== value);
   
       // 3. modifier le state avec le setter
-      setItems(itemsCopyUpdated);
+      setData(datasCopyUpdated);
     };
   
+    // const handleSubmit = (event) => {
+    //   event.preventDefault();
+  
+    //   // 1. copie du state
+    //   const itemsCopy = [...items];
+  
+    //   // 2. manipulation sur la copie du state
+    //   const value = new Date().getTime();
+    //   const label = newItems;
+    //   const itemToAdd = { value, label };
+    //   itemsCopy.push(itemToAdd);
+  
+    //   // 3. modifier le state avec le setter puis vider l'input
+    //   setItems(itemsCopy);
+    //   setNewItems("");
+    // };
+
     const handleSubmit = (event) => {
       event.preventDefault();
   
       // 1. copie du state
-      const itemsCopy = [...items];
+      const datasCopy = [...data];
   
       // 2. manipulation sur la copie du state
       const value = new Date().getTime();
-      const label = newItems;
-      const itemToAdd = { value, label };
-      itemsCopy.push(itemToAdd);
+      const label = newDatas;
+      const dataToAdd = { label, value };
+      datasCopy.push(dataToAdd);
   
       // 3. modifier le state avec le setter puis vider l'input
-      setItems(itemsCopy);
-      setNewItems("");
+      setData(datasCopy);
+      setNewDatas("");
     };
   
     const handleChange = (event) => {
-      setNewItems(event.target.value);
+      setNewDatas(event.target.value);
     };
 
   const chartRef = useRef(null);
@@ -52,11 +88,6 @@ function Wheel() {
     const h = 500 - padding.top - padding.bottom;
     const r = Math.min(w, h) / 3;
     const color = d3.scaleOrdinal(d3.schemeCategory10);
-
-    const data = [
-      { label: 'Test', value: 1 },
-      { label: 'Test', value: 2 }
-    ];
 
     const svg = d3
       .select(chartRef.current)
@@ -168,7 +199,7 @@ function Wheel() {
         return 'rotate(' + i(t) + ')';
       };
     }
-  }, []);
+  }, [data]);
 
 //affichage (render)
 
@@ -178,13 +209,13 @@ function Wheel() {
           <svg width="500" height="500"></svg>
         </div>
         <ul>
-          {items.map((item) => (
-            <WheelItem key={item.value} itemInfo={item} onItemDelete={handleDelete} />
+          {data.map((data) => (
+            <WheelItem key={data.value} itemInfo={data} onItemDelete={handleDelete} />
           ))}
         </ul>
         <form action="submit" onSubmit={handleSubmit}>
           <input
-            value={newItems}
+            value={newDatas}
             type="text"
             placeholder="Ajouter un item"
             onChange={handleChange}
