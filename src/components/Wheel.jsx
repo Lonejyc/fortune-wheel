@@ -4,60 +4,7 @@ import * as d3 from 'd3';
 import { scaleOrdinal } from 'd3-scale';
 import "./Wheel.css";
 
-let oldrotation = 0;
-let rotation = 0;
-let picked = 0;
-const oldpick = [];
-
-function spin(el) {
-  el.on('click', null);
-
-  if (oldpick.length === data.length) {
-    console.log('done');
-    el.on('click', null);
-    return;
-  }
-
-  const ps = 360 / data.length;
-  const pieslice = Math.round(1440 / data.length);
-  const rng = Math.floor(Math.random() * 1440 + 360);
-
-  rotation = Math.round(rng / ps) * ps;
-
-  picked = Math.round(data.length - (rotation % 360) / ps);
-  picked = picked >= data.length ? picked % data.length : picked;
-
-  if (oldpick.indexOf(picked) !== -1) {
-    spin();
-    return;
-  } else {
-    oldpick.push(picked);
-  }
-
-  rotation += 90 - Math.round(ps / 2);
-
-  vis
-    .transition()
-    .duration(3000)
-    .attrTween('transform', rotTween)
-    .each('end', function () {
-      d3.select('.slice:nth-child(' + (picked + 1) + ') path').attr('fill', '#111');
-      oldrotation = rotation;
-
-      console.log(data[picked].value);
-
-      el.on('click', spin);
-    });
-}
-
-function rotTween(to) {
-  const i = d3.interpolate(oldrotation % 360, rotation);
-  return function (t) {
-    return 'rotate(' + i(t) + ')';
-  };
-}
-
-function Wheel() {    
+function Wheel() {
     const [data, setData] = useState([
       { label: 'Test', value: 1 },
       { label: 'Test', value: 2 },
@@ -97,10 +44,6 @@ function Wheel() {
     const handleChange = (event) => {
       setNewDatas(event.target.value);
     };
-
-    function handleSpinClick(el) {
-      spin(el);
-    }
 
   const chartRef = useRef(null);
 
@@ -170,7 +113,61 @@ function Wheel() {
       });
 
     // container.on('click', spin);
+    container.on('click', spin);
 
+    let oldrotation = 0;
+    let rotation = 0;
+    let picked = 0;
+    const oldpick = [];
+
+    function spin(d) {
+      container.on('click', null);
+
+      if (oldpick.length === data.length) {
+        console.log('done');
+        container.on('click', null);
+        return;
+      }
+
+      const ps = 360 / data.length;
+      const pieslice = Math.round(1440 / data.length);
+      const rng = Math.floor(Math.random() * 1440 + 360);
+
+      rotation = Math.round(rng / ps) * ps;
+
+      picked = Math.round(data.length - (rotation % 360) / ps);
+      picked = picked >= data.length ? picked % data.length : picked;
+
+      if (oldpick.indexOf(picked) !== -1) {
+        spin();
+        return;
+      } else {
+        oldpick.push(picked);
+      }
+
+      rotation += 90 - Math.round(ps / 2);
+
+      vis
+        .transition()
+        .duration(3000)
+        .attrTween('transform', rotTween)
+        .each('end', function () {
+          d3.select('.slice:nth-child(' + (picked + 1) + ') path').attr('fill', '#111');
+          oldrotation = rotation;
+
+          console.log(data[picked].value);
+
+          container.on('click', spin);
+        });
+    }
+
+    function rotTween(to) {
+      const i = d3.interpolate(oldrotation % 360, rotation);
+      return function (t) {
+        return 'rotate(' + i(t) + ')';
+      };
+    }
+    
   }, [data]);
 
 //affichage (render)
@@ -179,7 +176,7 @@ function Wheel() {
       <div className="winwheel">
         <div id="chart" ref={chartRef}>
           <svg className="svg_" width="500" height="500"></svg>
-          <button className="spin" onClick={(event) => handleSpinClick(event.target)}>SPIN</button>
+          <button className="spin">SPIN</button>
           <div className="targeter"></div>
         </div>
         <ul>
