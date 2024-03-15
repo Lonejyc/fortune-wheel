@@ -55,7 +55,8 @@ function Wheel() {
     const h = 500 - padding.top - padding.bottom;
     const r = Math.min(w, h) / 3;
     // const color = d3.scaleOrdinal(d3.schemeCategory10);
-    const color = ['#f54242', '#4287f5', '#f5bf42', '#42f56f', '#f5d742', '#c242f5'];
+    // const color = ['#f54242', '#4287f5', '#f5bf42', '#42f56f', '#f5d742', '#c242f5'];
+    const color = ['url(#gradient) #447799', '#fff'];
     const svg = d3.select('svg');
 
     svg.selectAll('*').remove();
@@ -74,7 +75,8 @@ function Wheel() {
 
     const arc = d3.arc().outerRadius(r).innerRadius(0);
 
-    const vis = container.append('g');
+    const vis = container.append('g')
+      .attr('class', 'pies');
 
     const arcs = vis
       .selectAll('g.slice')
@@ -189,6 +191,13 @@ function Wheel() {
           />
           <button>Ajouter</button>
         </form>
+        <svg style={{ position: 'absolute' }} width="0" height="0" aria-hidden="true" focusable="false">
+          <linearGradient id="gradient" x2="1" y2="1">
+            <stop offset="0%" stopColor="#00ad02" />
+            <stop offset="50%" stopColor="#42d701" />
+            <stop offset="100%" stopColor="#7cfc00" />
+          </linearGradient>
+        </svg>
       </div>
     );
 };
