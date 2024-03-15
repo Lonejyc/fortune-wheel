@@ -1,0 +1,12 @@
+:root {
+    --primary: #2FD349;
+    --secondary: #8CE7E7;
+    --accent: #5DC1DD;
+    --bcg: #F7FDF8;
+    --text: #030D05;
+    --prm-font: "Erica One";
+}
+
+html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
