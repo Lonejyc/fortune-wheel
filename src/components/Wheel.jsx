@@ -5,45 +5,47 @@ import { scaleOrdinal } from 'd3-scale';
 import "./Wheel.css";
 
 function Wheel() {
-    const [data, setData] = useState([
-      { label: 'Test', value: 1 },
-      { label: 'Test', value: 2 },
-      { label: 'Test', value: 3 }
-    ]);
-    
-    const [newDatas, setNewDatas] = useState("");
+  const [data, setData] = useState([
+    { label: 'Test 1', value: 1 },
+    { label: 'Test 2', value: 2 },
+    { label: 'Test 3', value: 3 }
+  ]);
+  
+  const [newDatas, setNewDatas] = useState("");
 
-    const handleDelete = (value) => {
-      // 1. copie du state
-      const datasCopy = [...data];
-  
-      // 2. manipulation sur la copie du state
-      const datasCopyUpdated = datasCopy.filter((data) => data.value !== value);
-  
-      // 3. modifier le state avec le setter
-      setData(datasCopyUpdated);
-    };
+  const handleDelete = (value) => {
+    // 1. copie du state
+    const datasCopy = [...data];
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-  
-      // 1. copie du state
-      const datasCopy = [...data];
-  
-      // 2. manipulation sur la copie du state
-      const value = new Date().getTime();
-      const label = newDatas;
-      const dataToAdd = { label, value };
-      datasCopy.push(dataToAdd);
-  
-      // 3. modifier le state avec le setter puis vider l'input
-      setData(datasCopy);
-      setNewDatas("");
-    };
-  
-    const handleChange = (event) => {
-      setNewDatas(event.target.value);
-    };
+    // 2. manipulation sur la copie du state
+    const datasCopyUpdated = datasCopy.filter((data) => data.value !== value);
+
+    // 3. modifier le state avec le setter
+    setData(datasCopyUpdated);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // 1. copie du state
+    const datasCopy = [...data];
+
+    // 2. manipulation sur la copie du state
+    const value = new Date().getTime();
+    const label = newDatas;
+    const dataToAdd = { label, value };
+    datasCopy.push(dataToAdd);
+
+    // 3. modifier le state avec le setter puis vider l'input
+    setData(datasCopy);
+    setNewDatas("");
+  };
+
+  const handleChange = (event) => {
+    setNewDatas(event.target.value);
+  };
+
+  const spinButtonRef = useRef(null);
 
   const chartRef = useRef(null);
 
@@ -112,61 +114,55 @@ function Wheel() {
         return data[i].label;
       });
 
-    // container.on('click', spin);
-    container.on('click', spin);
+      let rotation = 0;
+      let oldrotation = 0;
+      let picked = 0;
 
-    let oldrotation = 0;
-    let rotation = 0;
-    let picked = 0;
-    const oldpick = [];
+      function spin(d) {
+        // container.on('click', null);
+        console.log(data);
+      
+        const ps = 360 / data.length;
+        const rng = Math.floor(Math.random() * (1440 * 4) + 360);
+        const offset = 0.25;
+      
+        rotation = Math.round(rng / ps) * ps;
+      
+        rotation += 90 - Math.round(ps / 2);
 
-    function spin(d) {
-      container.on('click', null);
-
-      if (oldpick.length === data.length) {
-        console.log('done');
-        container.on('click', null);
-        return;
+        picked = Math.round(data.length - (rotation % 360) / ps);
+        picked = picked >= data.length ? (picked % data.length) : picked;
+        picked = (picked + Math.floor(offset * data.length)) % data.length; // to fix the offset
+      
+        vis
+          .transition()
+          .duration(5000)
+          .attrTween('transform', rotTween)
+          .on('end', function () {
+            oldrotation = rotation;
+            console.log(picked);
+            console.log(data[picked].label);
+            // container.on('click', spin);
+          });
       }
-
-      const ps = 360 / data.length;
-      const pieslice = Math.round(1440 / data.length);
-      const rng = Math.floor(Math.random() * 1440 + 360);
-
-      rotation = Math.round(rng / ps) * ps;
-
-      picked = Math.round(data.length - (rotation % 360) / ps);
-      picked = picked >= data.length ? picked % data.length : picked;
-
-      if (oldpick.indexOf(picked) !== -1) {
-        spin();
-        return;
-      } else {
-        oldpick.push(picked);
+      
+      function rotTween() {
+        const i = d3.interpolate(oldrotation % 360, rotation);
+        return function (t) {
+          return 'rotate(' + i(t) + ')';
+        };
       }
+      
+      // container.on('click', spin);
 
-      rotation += 90 - Math.round(ps / 2);
-
-      vis
-        .transition()
-        .duration(3000)
-        .attrTween('transform', rotTween)
-        .each('end', function () {
-          d3.select('.slice:nth-child(' + (picked + 1) + ') path').attr('fill', '#111');
-          oldrotation = rotation;
-
-          console.log(data[picked].value);
-
-          container.on('click', spin);
-        });
-    }
-
-    function rotTween(to) {
-      const i = d3.interpolate(oldrotation % 360, rotation);
-      return function (t) {
-        return 'rotate(' + i(t) + ')';
+      if (spinButtonRef.current) {
+        spinButtonRef.current.addEventListener('click', spin);
+      }
+      return () => {
+        if (spinButtonRef.current) {
+          spinButtonRef.current.removeEventListener('click', spin);
+        }
       };
-    }
     
   }, [data]);
 
@@ -176,7 +172,7 @@ function Wheel() {
       <div className="winwheel">
         <div id="chart" ref={chartRef}>
           <svg className="svg_" width="500" height="500"></svg>
-          <button className="spin">SPIN</button>
+          <button className="spin" ref={spinButtonRef}>SPIN</button>
           <div className="targeter"></div>
         </div>
         <ul>

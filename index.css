@@ -1,0 +1,132 @@
+/* Ajout des polices */
+@import url(fonts.css);
+
+/* Ajout des animations */
+@keyframes bannière {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Ajout des styles */
+main .wrap .tempsRestant {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.lottie {
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lottie dotlottie-player {
+    transform: scale(1.45);
+}
+
+.wrap .tempsRestant .title {
+    color: var(--Blanc, #FFF);
+    font-family: 'Gotham';
+    font-size: 2.4rem;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.wrap .tempsRestant .countdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-block: 50px 50px; 
+}
+
+.wrap .tempsRestant .countdown .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 1rem;
+}
+
+.wrap .tempsRestant .countdown .dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    transform: translateY(-60%);
+}
+
+.wrap .tempsRestant .countdown .dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--crème);
+}
+
+.wrap .tempsRestant .countdown .box .time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.wrap .tempsRestant .countdown .box .time > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 110px;
+    border-radius: 20px;
+    background: var(--crème);
+    color: var(--gris);
+    text-align: center;
+    font-family: 'Kaviron';
+    font-size: 5rem;
+    margin-bottom: 30px;
+}
+
+.wrap .tempsRestant .countdown .box .unite {
+    color: var(--blanc);
+    font-family: 'Gotham';
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.bannière {
+    margin-block: 150px;
+    max-width: 100vw;
+    overflow: hidden;
+    transform: rotateZ(-10deg);
+}
+
+.bannière .bannièreText {
+    display: flex;
+    height: 80px;
+    gap: 1rem;
+    transform: translateX(-100%);
+    animation: bannière 10s linear infinite;
+}
+
+.bannière .bannièreText > img {
+    width: 100%;
+    height: 100%;
+}
+
+.bannière .bannièreText > p {
+    color: var(--crème);
+    font-family: 'Kaviron';
+    text-align: center;
+    font-size: 4.65rem;
+    font-style: normal;
+    font-weight: 400;
+}
