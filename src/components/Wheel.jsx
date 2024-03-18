@@ -173,6 +173,7 @@ function Wheel() {
   return (
       <div className="winwheel">
         <div id="chart" ref={chartRef}>
+          <div className="backgnd"></div>
           <svg className="svg_" width="500" height="500"></svg>
           <button className="spin" ref={spinButtonRef}>SPIN</button>
           <div className="targeter"></div>
