@@ -1,3 +1,4 @@
+import del from "../assets/Delete.svg";
 export default function WheelItem({ itemInfo, onItemDelete }) {
     // state
   
@@ -7,7 +8,7 @@ export default function WheelItem({ itemInfo, onItemDelete }) {
     return (
       <li key={itemInfo.value}>
         {itemInfo.label}{" "}
-        <button onClick={() => onItemDelete(itemInfo.value)}>X</button>
+        <button className="button-del" onClick={() => onItemDelete(itemInfo.value)}><img src={del} alt="Croix"/></button>
       </li>
     );
   }

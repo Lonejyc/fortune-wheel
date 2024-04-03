@@ -10,7 +10,7 @@
 @font-face {
     font-family: 'Erica One';
     src: url('assets/EricaOne-Regular.woff2') format('woff2'),
-        url('asstes/EricaOne-Regular.woff') format('woff');
+        url('assets/EricaOne-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -27,4 +27,19 @@
 
 html {
     font-family: var(--prm-font), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--bcg);
+    border: 8px black solid;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden
 }

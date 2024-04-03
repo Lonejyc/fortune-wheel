@@ -1,14 +1,17 @@
 import WheelItem from './WheelItem';
+
 import { useState, useEffect, useRef } from "react";
 import * as d3 from 'd3';
-import { scaleOrdinal } from 'd3-scale';
+import cn from 'mxcn';
+
 import "./Wheel.css";
+import arrow from "../assets/Arrow.svg";
 
 function Wheel() {
   const [data, setData] = useState([
-    { label: 'Test 1', value: 1 },
-    { label: 'Test 2', value: 2 },
-    { label: 'Test 3', value: 3 }
+    { label: 'Choix 1', value: 1 },
+    { label: 'Choix 2', value: 2 },
+    { label: 'Choix 3', value: 3 }
   ]);
   
   const [newDatas, setNewDatas] = useState("");
@@ -43,6 +46,13 @@ function Wheel() {
 
   const handleChange = (event) => {
     setNewDatas(event.target.value);
+  };
+
+  const [showItems, setShowItems] = useState(true);
+
+  const handleOnClick = () => {
+    setShowItems(!showItems);
+    console.log("click");
   };
 
   const spinButtonRef = useRef(null);
@@ -172,26 +182,38 @@ function Wheel() {
 
   return (
       <div className="winwheel">
+        <h1>Bienvenue sur la roue de la fortune</h1>
+        <button onClick={handleOnClick}>Items</button>
         <div id="chart" ref={chartRef}>
           <div className="backgnd"></div>
           <svg className="svg_" width="500" height="500"></svg>
           <button className="spin" ref={spinButtonRef}>SPIN</button>
           <div className="targeter"></div>
         </div>
-        <ul>
-          {data.map((data) => (
-            <WheelItem key={data.value} itemInfo={data} onItemDelete={handleDelete} />
-          ))}
-        </ul>
-        <form action="submit" onSubmit={handleSubmit}>
-          <input
-            value={newDatas}
-            type="text"
-            placeholder="Ajouter un item"
-            onChange={handleChange}
-          />
-          <button>Ajouter</button>
-        </form>
+        <div className={cn("items-view", { 'active': showItems})}>
+          <button onClick={handleOnClick}><img src={arrow} alt="Flèche" /></button>
+          <h2>Ajouter des variables</h2>
+          <ul>
+            {data.map((data) => (
+              <WheelItem key={data.value} itemInfo={data} onItemDelete={handleDelete} />
+            ))}
+          </ul>
+          <form action="submit" onSubmit={handleSubmit}>
+            <input
+              className='input'
+              value={newDatas}
+              type="text"
+              autoComplete="off"
+              placeholder="Ajouter un choix"
+              onChange={handleChange}
+            />
+            <button disabled={!newDatas} className='button-add'>
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front text">Ajouter</span>
+            </button>
+          </form>
+        </div>
         <svg style={{ position: 'absolute' }} width="0" height="0" aria-hidden="true" focusable="false">
           <linearGradient id="gradient" x2="1" y2="1">
             <stop offset="0%" stopColor="#00ad02" />
