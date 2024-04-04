@@ -183,7 +183,7 @@ function Wheel() {
   return (
       <div className="winwheel">
         <h1>Bienvenue sur la roue de la fortune</h1>
-        <button onClick={handleOnClick}>Items</button>
+        <button className="button-view reverse" onClick={handleOnClick}><img src={arrow} alt="Flèche" /></button>
         <div id="chart" ref={chartRef}>
           <div className="backgnd"></div>
           <svg className="svg_" width="500" height="500"></svg>
@@ -191,7 +191,7 @@ function Wheel() {
           <div className="targeter"></div>
         </div>
         <div className={cn("items-view", { 'active': showItems})}>
-          <button onClick={handleOnClick}><img src={arrow} alt="Flèche" /></button>
+          <button className="button-view" onClick={handleOnClick}><img src={arrow} alt="Flèche" /></button>
           <h2>Ajouter des variables</h2>
           <ul>
             {data.map((data) => (

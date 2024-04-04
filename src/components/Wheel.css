@@ -38,6 +38,28 @@ text{
     font: bold 26px system-ui;
 }
 
+.button-view {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    img {
+        rotate: 180deg;
+    }
+    &.reverse {
+        right: 16px;
+        left:unset;
+        img {
+            rotate: 0deg;
+        }
+    }
+}
+
 .button-add {
     position: relative;
     border: none;
