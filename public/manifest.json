@@ -1,0 +1,38 @@
+{
+    "name": "Roue de la Chance",
+    "short_name": "Roue de la Chance",
+    "theme_color": "#2fd349",
+    "background_color": "#8ce7e7",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "logo192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "logo256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "logo384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "logo512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "masquable_icon.png",
+            "sizes": "640x640",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+  }
