@@ -197,7 +197,7 @@ function Wheel() {
 
   return (
       <div className="winwheel">
-        <h1>Bienvenue sur la roue de la fortune</h1>
+        <h1>Roue de la fortune</h1>
         <div className={cn("picked-item", { 'show': popup })}>
           <button className="button-close" onClick={handlePopup}>X</button>
           <h3>Le résultat est :</h3>
