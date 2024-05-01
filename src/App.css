@@ -2,7 +2,7 @@
     --primary: #2FD349;
     --secondary: #8CE7E7;
     --accent: #5DC1DD;
-    --bcg: #F7FDF8;
+    --bcg: #fcfdf7;
     --text: #030D05;
     --prm-font: "Carter One";
 }
@@ -30,7 +30,7 @@ html {
 }
 
 body {
-    background-color: var(--bcg);
+    background-color: var(--bck);
 }
 
 #root {
@@ -41,7 +41,7 @@ body {
     width: fit-content;
     margin: 0 auto;
     padding: 20px;
-    background-color: var(--bcg);
+    background-color: var(--secondary);
     border: 8px black solid;
     border-radius: 50px;
     position: relative;

@@ -59,6 +59,20 @@ function Wheel() {
 
   const chartRef = useRef(null);
 
+  const [popup, setPopup] = useState(false);
+
+  const handlePopup = () => {
+    setPopup(!popup);
+  };
+
+  const [pickedChoice, setPickedChoice] = useState("");
+
+  const displayPickedChoice = () => {
+    if (pickedChoice !== "") {
+      return pickedChoice;
+    }
+  };
+
   useEffect(() => {
     const padding = { top: 10, right: 20, bottom: 10, left: 20 };
     const w = 500 - padding.left - padding.right;
@@ -154,7 +168,8 @@ function Wheel() {
             oldrotation = rotation;
             console.log(picked);
             console.log(data[picked].label);
-            // container.on('click', spin);
+            setPickedChoice(data[picked].label);
+            handlePopup();
           });
       }
       
@@ -183,14 +198,19 @@ function Wheel() {
   return (
       <div className="winwheel">
         <h1>Bienvenue sur la roue de la fortune</h1>
-        <button className="button-view reverse" onClick={handleOnClick}><img src={arrow} alt="Flèche" /></button>
+        <div className={cn("picked-item", { 'show': popup })}>
+          <button className="button-close" onClick={handlePopup}>X</button>
+          <h3>Le résultat est :</h3>
+          <h3>{displayPickedChoice()}</h3>
+        </div>
+        <button className={cn("button-view", { 'reverse': !showItems })} onClick={handleOnClick}><img src={arrow} alt="Flèche" /></button>
         <div id="chart" ref={chartRef}>
           <div className="backgnd"></div>
           <svg className="svg_" width="500" height="500"></svg>
           <button className="spin" ref={spinButtonRef}>SPIN</button>
           <div className="targeter"></div>
         </div>
-        <div className={cn("items-view", { 'active': showItems})}>
+        <div className={cn("items-view", { 'active': showItems })}>
           <h2>Ajouter des variables</h2>
           <ul>
             {data.map((data) => (
